@@ -6,27 +6,29 @@ import { logoutUser } from '../../actions/authActions';
 import { clearCurrentProfile } from '../../actions/profileActions';
 
 class Navbar extends Component {
-	onLogoutClick = (e) => {
+	onLogoutClick(e) {
 		e.preventDefault();
 		this.props.clearCurrentProfile();
 		this.props.logoutUser();
-	};
+	}
 
 	render() {
 		const { isAuthenticated, user } = this.props.auth;
 
 		const authLinks = (
 			<ul className="navbar-nav ml-auto">
-				<a href="/" onClick={this.onLogoutClick} className="nav-link">
-					<img
-						className="rounded-circle"
-						src={user.avatar}
-						alt={user.name}
-						style={{ width: '25px', marginRight: '5px' }}
-						title="You must have a Gravatar connected to your email to display an image"
-					/>{' '}
-					Logout
-				</a>
+				<li className="nav-item">
+					<a href="" onClick={this.onLogoutClick.bind(this)} className="nav-link">
+						<img
+							className="rounded-circle"
+							src={user.avatar}
+							alt={user.name}
+							style={{ width: '25px', marginRight: '5px' }}
+							title="You must have a Gravatar connected to your email to display an image"
+						/>{' '}
+						Logout
+					</a>
+				</li>
 			</ul>
 		);
 
