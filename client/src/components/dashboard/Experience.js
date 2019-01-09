@@ -44,6 +44,8 @@ class Experience extends Component {
 	}
 }
 
-Experience.propTypes = {};
+Experience.propTypes = {
+	deleteExperience: PropTypes.func.isRequired
+};
 
 export default connect(null, { deleteExperience })(Experience);
