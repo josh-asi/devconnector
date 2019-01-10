@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { ADD_POST, GET_POSTS, GET_ERRORS, POST_LOADING, DELETE_POST } from './types';
+import { ADD_POST, GET_POSTS, GET_ERRORS, POST_LOADING, DELETE_POST, GET_POST } from './types';
 
 // Add Post
 export const addPost = (postData) => (dispatch) => {
@@ -34,6 +34,25 @@ export const getPosts = () => (dispatch) => {
 		.catch((err) =>
 			dispatch({
 				type: GET_POSTS,
+				payload: null
+			})
+		);
+};
+
+// Get Singular Post
+export const getPost = (id) => (dispatch) => {
+	dispatch(setPostLoading());
+	axios
+		.get(`/api/posts/${id}`)
+		.then((res) =>
+			dispatch({
+				type: GET_POST,
+				payload: res.data
+			})
+		)
+		.catch((err) =>
+			dispatch({
+				type: GET_POST,
 				payload: null
 			})
 		);
@@ -75,6 +94,24 @@ export const removeLike = (id) => (dispatch) => {
 			payload: err.response.data
 		})
 	);
+};
+
+// Add comment
+export const addComment = (postId, commentData) => (dispatch) => {
+	axios
+		.post(`/api/posts/comment/${postId}`, commentData)
+		.then((res) =>
+			dispatch({
+				type: GET_POST,
+				payload: res.data
+			})
+		)
+		.catch((err) =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			})
+		);
 };
 
 // Set loading state
